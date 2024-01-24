@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+import socket
+from datetime import datetime
+
+SERVER_ADDR = ('0.0.0.0', 1303)
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(SERVER_ADDR)
+    s.listen()
+    while True:
+        conn, addr = s.accept()
+        print(addr)
+        with conn:
+            now = datetime.now().strftime("%d.%m.%Y %H:%M")
+            conn.sendall(now.encode())
